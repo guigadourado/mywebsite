@@ -1,2 +1,1 @@
 # mywebsite
-www.guidourado.com
