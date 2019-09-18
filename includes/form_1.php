@@ -8,7 +8,7 @@
 	$email = $_POST['email'];
 	$message = $_POST['message'];
 	
-	$to = 'receiver@yoursite.com'; // Email submissions are sent to this email
+	$to = 'guigadourado@gmail.com'; // Email submissions are sent to this email
 
 	// Create email	
 	$email_subject = "Message from website.";
