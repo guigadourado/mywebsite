@@ -50,18 +50,12 @@ button{font:inherit;color:inherit}
 .sec{padding:var(--sy) var(--pad)}
 
 /* header */
-.top{display:flex;justify-content:space-between;align-items:center;padding:calc(18px + env(safe-area-inset-top, 0px)) var(--pad) 18px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--frame) 86%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-/* Safari: the page runs under the status bar and the floating toolbar. The sticky header grows up into the status bar so its blur covers it;
-   at the bottom, a progressive blur (stacked backdrop blurs under staggered masks) keeps content continuous behind the controls without clashing with them */
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px var(--pad);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:color-mix(in srgb, var(--frame) 86%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+/* Safari: the page runs under the status bar and the floating toolbar. No fixed element touches the bottom edge: Safari 26 turns any fixed
+   layer it finds there into a solid toolbar tint, which hides the content running behind its glass controls */
 html{background:var(--bg)}
-.edge-blur{display:none;position:fixed;left:0;right:0;bottom:0;height:calc(env(safe-area-inset-bottom, 0px) + 84px);z-index:25;pointer-events:none}
-.edge-blur i{position:absolute;inset:0}
-.edge-blur i:nth-child(1){-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);-webkit-mask:linear-gradient(transparent 0%,#000 20%,#000 40%,transparent 60%);mask:linear-gradient(transparent 0%,#000 20%,#000 40%,transparent 60%)}
-.edge-blur i:nth-child(2){-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);-webkit-mask:linear-gradient(transparent 20%,#000 40%,#000 60%,transparent 80%);mask:linear-gradient(transparent 20%,#000 40%,#000 60%,transparent 80%)}
-.edge-blur i:nth-child(3){-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-mask:linear-gradient(transparent 40%,#000 60%,#000 80%,transparent 100%);mask:linear-gradient(transparent 40%,#000 60%,#000 80%,transparent 100%)}
-.edge-blur i:nth-child(4){-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);-webkit-mask:linear-gradient(transparent 60%,#000 85%);mask:linear-gradient(transparent 60%,#000 85%)}
-.edge-blur::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent, color-mix(in srgb, var(--frame) 55%, transparent))}
-@media (hover:none) and (pointer:coarse){.edge-blur{display:block}.frame{padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 64px)}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:30;background:var(--frame)}
+@media (hover:none) and (pointer:coarse){.frame{padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 64px)}}
 .crumbs{display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:var(--muted);white-space:nowrap}
 .crumbs a{display:inline-flex;align-items:center;gap:8px;transition:color .15s}.crumbs a:hover,.crumbs a:hover .sep{color:var(--ink)}
 .crumbs .sep{flex:none;width:12px;height:12px;color:var(--faint)}
@@ -564,7 +558,6 @@ figcaption{font-size:13px;color:var(--muted)}
   </div>
 </div>
 <div class="pv" id="pv" aria-hidden="true"></div>
-<div class="edge-blur" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 <div class="draft" id="draftBadge" hidden>Draft: prompts visible</div>
 
 <script>
