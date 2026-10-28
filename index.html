@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0F0F0F" media="(prefers-color-scheme: dark)">
 <title>Gui Dourado · Senior Product Designer</title>
 <meta name="description" content="Gui Dourado, Senior Product Designer. Products for music creators and the design systems behind them, at BeatStars, ília and My Mixtapez.">
 <meta property="og:type" content="website">
@@ -1007,7 +1005,7 @@ function bind(){
 const root = document.documentElement;
 const dark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 const themeBtn = document.getElementById('themeBtn');
-const paintBtn = () => { document.querySelectorAll('meta[name=theme-color]').forEach(m => { if (root.dataset.theme) m.removeAttribute('media'); m.content = getComputedStyle(root).getPropertyValue('--frame').trim(); }); themeBtn.innerHTML = dark() ? SUN : MOON; themeBtn.setAttribute('aria-label', dark() ? 'Switch to light theme' : 'Switch to dark theme'); };
+const paintBtn = () => { themeBtn.innerHTML = dark() ? SUN : MOON; themeBtn.setAttribute('aria-label', dark() ? 'Switch to light theme' : 'Switch to dark theme'); };
 const savedTheme = ls.get('theme'); if (savedTheme === 'dark' || savedTheme === 'light') root.dataset.theme = savedTheme;
 themeBtn.addEventListener('click', () => { const next = dark() ? 'light' : 'dark'; vt(() => { root.dataset.theme = next; paintBtn(); }); ls.set('theme', next); });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintBtn);
