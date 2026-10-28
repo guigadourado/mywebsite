@@ -50,9 +50,9 @@ button{font:inherit;color:inherit}
 .sec{padding:var(--sy) var(--pad)}
 
 /* header */
-.top{display:flex;justify-content:space-between;align-items:center;padding:18px var(--pad);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:color-mix(in srgb, var(--frame) 86%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px var(--pad);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top, 0px);z-index:20}
 /* the header's glass continues up behind the status bar, so nothing scrolls past crisp between the two */
-.top::before{content:"";position:absolute;left:-1px;right:-1px;bottom:100%;height:env(safe-area-inset-top, 0px);background:inherit;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);pointer-events:none}
+.top::before{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;top:calc(-1 * env(safe-area-inset-top, 0px));background:color-mix(in srgb, var(--frame) 86%, transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);pointer-events:none}
 /* Safari: the page runs under the status bar and the floating toolbar. No fixed element touches the bottom edge: Safari 26 turns any fixed
    layer it finds there into a solid toolbar tint, which hides the content running behind its glass controls */
 html{background:var(--bg)}
