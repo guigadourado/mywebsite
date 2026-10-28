@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FCFCFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F0F0F" media="(prefers-color-scheme: dark)">
 <title>Gui Dourado · Senior Product Designer</title>
 <meta name="description" content="Gui Dourado, Senior Product Designer. Products for music creators and the design systems behind them, at BeatStars, ília and My Mixtapez.">
 <meta property="og:type" content="website">
@@ -38,7 +40,7 @@
 
 *{box-sizing:border-box}
 html{overflow-x:clip}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit}
 :focus-visible{outline:1.5px solid var(--accent);outline-offset:3px;border-radius:3px}
@@ -52,6 +54,9 @@ button{font:inherit;color:inherit}
 /* Safari: the page runs under the status bar and the floating toolbar. No fixed element touches the bottom edge: Safari 26 turns any fixed
    layer it finds there into a solid toolbar tint, which hides the content running behind its glass controls */
 html{background:var(--bg)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:30;pointer-events:none;background:var(--frame)}
+/* desktop only: drop the default body margin (on iPhone Safari it is what keeps the status bar showing the page) */
+@media (hover:hover) and (pointer:fine){body{margin:0}}
 /* progressive blur behind the toolbar: it starts exactly at the bottom of the layout viewport (top:100%), so it lives only in the strip
    Safari draws under its controls and never inside the page where Safari would sample it. When the toolbar collapses the viewport grows and the blur follows it down */
 .edge-blur{display:none;position:fixed;left:0;right:0;top:100%;height:140px;z-index:25;pointer-events:none}
@@ -1005,7 +1010,7 @@ function bind(){
 const root = document.documentElement;
 const dark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 const themeBtn = document.getElementById('themeBtn');
-const paintBtn = () => { themeBtn.innerHTML = dark() ? SUN : MOON; themeBtn.setAttribute('aria-label', dark() ? 'Switch to light theme' : 'Switch to dark theme'); };
+const paintBtn = () => { document.querySelectorAll('meta[name=theme-color]').forEach(m => { if (root.dataset.theme) m.removeAttribute('media'); m.content = getComputedStyle(root).getPropertyValue('--frame').trim(); }); themeBtn.innerHTML = dark() ? SUN : MOON; themeBtn.setAttribute('aria-label', dark() ? 'Switch to light theme' : 'Switch to dark theme'); };
 const savedTheme = ls.get('theme'); if (savedTheme === 'dark' || savedTheme === 'light') root.dataset.theme = savedTheme;
 themeBtn.addEventListener('click', () => { const next = dark() ? 'light' : 'dark'; vt(() => { root.dataset.theme = next; paintBtn(); }); ls.set('theme', next); });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintBtn);
